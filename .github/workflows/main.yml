@@ -1,0 +1,24 @@
+name: Continuous Wakeup Service
+
+on:
+  schedule:
+    # هذا السطر يعني: اشتغل كل 6 ساعات بالضبط
+    # التوقيت بتنسيق Cron (0 */6 * * *)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # هذا السطر يسمح لك بتشغيل السكربت يدوياً للتجربة
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest # السيرفر الذي سيعمل عليه الكود
+
+    steps:
+      - name: Get Code From Repo
+        uses: actions/checkout@v4 # سحب كودك من المستودع
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4 # تجهيز بيئة نود
+        with:
+          node-version: '20'
+
+      - name: Run The Script
+        run: node index.js # تشغيل الملف الذي أنشأناه
